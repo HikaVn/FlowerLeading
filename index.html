@@ -14,15 +14,15 @@
         --gold2: #85692c;
         --line: rgba(185, 151, 69, 0.42);
         --shadow: 0 18px 50px rgba(86, 59, 27, 0.18);
-        --card-front-image-width: 120%;
-        --card-front-image-height: 120%;
-        --card-front-image-offset-y: -4.4%;
-        --card-back-image-width: 119%;
-        --card-back-image-height: 132%;
-        --card-back-image-aspect-ratio: 1.1;
-        --card-back-image-offset-x: -0.2%;
-        --card-back-image-offset-y: 2.20%;
-        --card-back-image-scale-y: 1.029;
+        --desktop-card-front-image-width: 120%;
+        --desktop-card-front-image-height: 120%;
+        --desktop-card-front-image-offset-y: -4.4%;
+        --desktop-card-back-image-width: 119%;
+        --desktop-card-back-image-height: 132%;
+        --desktop-card-back-image-aspect-ratio: 1.1;
+        --desktop-card-back-image-offset-x: -0.2%;
+        --desktop-card-back-image-offset-y: 2.20%;
+        --desktop-card-back-image-scale-y: 1.029;
         --mobile-card-front-image-width: 120%;
         --mobile-card-front-image-height: 120%;
         --mobile-card-front-image-offset-y: -4.4%;
@@ -32,6 +32,15 @@
         --mobile-card-back-image-offset-x: -0.2%;
         --mobile-card-back-image-offset-y: 1.2%;
         --mobile-card-back-image-scale-y: 1.085;
+        --card-front-image-width: var(--desktop-card-front-image-width);
+        --card-front-image-height: var(--desktop-card-front-image-height);
+        --card-front-image-offset-y: var(--desktop-card-front-image-offset-y);
+        --card-back-image-width: var(--desktop-card-back-image-width);
+        --card-back-image-height: var(--desktop-card-back-image-height);
+        --card-back-image-aspect-ratio: var(--desktop-card-back-image-aspect-ratio);
+        --card-back-image-offset-x: var(--desktop-card-back-image-offset-x);
+        --card-back-image-offset-y: var(--desktop-card-back-image-offset-y);
+        --card-back-image-scale-y: var(--desktop-card-back-image-scale-y);
         --serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
         --sans: "Hiragino Sans", "Yu Gothic", YuGothic, "Noto Sans JP", sans-serif;
       }
@@ -1007,7 +1016,7 @@
       const tunePresetStorageKey = "flower-leading-tune-presets";
       const tuneDefinitions = [
         {
-          key: "--card-front-image-width",
+          key: "--desktop-card-front-image-width",
           label: "表面 横の大きさ",
           help: "花画像の左右の広がりです。大きいほど横いっぱいに近づきます。",
           min: 80,
@@ -1018,7 +1027,7 @@
           group: "front",
         },
         {
-          key: "--card-front-image-height",
+          key: "--desktop-card-front-image-height",
           label: "表面 縦の大きさ",
           help: "花画像の上下の広がりです。大きいほど上下の余白が減ります。",
           min: 80,
@@ -1029,7 +1038,7 @@
           group: "front",
         },
         {
-          key: "--card-front-image-offset-y",
+          key: "--desktop-card-front-image-offset-y",
           label: "表面 上下位置",
           help: "マイナスで上へ、プラスで下へ動きます。",
           min: -20,
@@ -1040,7 +1049,7 @@
           group: "front",
         },
         {
-          key: "--card-back-image-width",
+          key: "--desktop-card-back-image-width",
           label: "裏面 横の大きさ",
           help: "Top.png の左右の広がりです。",
           min: 80,
@@ -1051,7 +1060,7 @@
           group: "back",
         },
         {
-          key: "--card-back-image-height",
+          key: "--desktop-card-back-image-height",
           label: "裏面 縦の大きさ",
           help: "Top.png の上下の広がりです。",
           min: 80,
@@ -1062,7 +1071,7 @@
           group: "back",
         },
         {
-          key: "--card-back-image-aspect-ratio",
+          key: "--desktop-card-back-image-aspect-ratio",
           label: "裏面 横縦比",
           help: "画像の横長・縦長の見え方を調整します。",
           min: 0.8,
@@ -1073,7 +1082,7 @@
           group: "back",
         },
         {
-          key: "--card-back-image-offset-x",
+          key: "--desktop-card-back-image-offset-x",
           label: "裏面 左右位置",
           help: "マイナスで左へ、プラスで右へ動きます。",
           min: -20,
@@ -1084,7 +1093,7 @@
           group: "back",
         },
         {
-          key: "--card-back-image-offset-y",
+          key: "--desktop-card-back-image-offset-y",
           label: "裏面 上下位置",
           help: "マイナスで上へ、プラスで下へ動きます。",
           min: -20,
@@ -1095,7 +1104,7 @@
           group: "back",
         },
         {
-          key: "--card-back-image-scale-y",
+          key: "--desktop-card-back-image-scale-y",
           label: "裏面 縦方向の伸び",
           help: "比率とは別に、縦だけ少し引き伸ばします。",
           min: 0.9,
