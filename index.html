@@ -23,6 +23,10 @@
         --card-back-image-offset-x: -0.2%;
         --card-back-image-offset-y: 2.20%;
         --card-back-image-scale-y: 1.029;
+        --mobile-card-back-image-width: 124%;
+        --mobile-card-back-image-height: 142%;
+        --mobile-card-back-image-offset-y: 1.2%;
+        --mobile-card-back-image-scale-y: 1.085;
         --serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
         --sans: "Hiragino Sans", "Yu Gothic", YuGothic, "Noto Sans JP", sans-serif;
       }
@@ -116,6 +120,143 @@
         margin-top: 16px;
         padding: 14px 8px;
         border-radius: 28px;
+      }
+      .tune-panel {
+        padding: 18px 16px;
+      }
+      .tune-panel details {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.62);
+        overflow: hidden;
+      }
+      .tune-panel summary {
+        padding: 14px 16px;
+        cursor: pointer;
+        font-family: var(--serif);
+        font-size: 18px;
+        color: var(--gold2);
+        user-select: none;
+      }
+      .tune-panel summary::marker {
+        color: var(--gold2);
+      }
+      .tune-inner {
+        padding: 0 16px 16px;
+      }
+      .tune-intro {
+        margin: 0 0 14px;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+      }
+      .tune-presets {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .tune-preset-card {
+        padding: 12px;
+        border: 1px solid rgba(185, 151, 69, 0.28);
+        border-radius: 16px;
+        background: rgba(255, 253, 247, 0.84);
+      }
+      .tune-preset-title {
+        margin: 0 0 8px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--gold2);
+      }
+      .tune-preset-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .tune-preset-row input,
+      .tune-preset-row select {
+        flex: 1 1 180px;
+        min-width: 0;
+        padding: 10px 12px;
+        border: 1px solid rgba(185, 151, 69, 0.4);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--ink);
+        font: inherit;
+      }
+      .tune-preset-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .tune-preset-actions button {
+        padding: 10px 16px;
+      }
+      .tune-groups {
+        display: grid;
+        gap: 12px;
+      }
+      .tune-group {
+        border: 1px solid rgba(185, 151, 69, 0.28);
+        border-radius: 18px;
+        background: rgba(255, 253, 247, 0.76);
+        overflow: hidden;
+      }
+      .tune-group summary {
+        padding: 12px 14px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--gold2);
+      }
+      .tune-group-body {
+        padding: 0 12px 12px;
+      }
+      .tune-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 14px;
+      }
+      .tune-field {
+        padding: 12px;
+        border: 1px solid rgba(185, 151, 69, 0.28);
+        border-radius: 16px;
+        background: rgba(255, 253, 247, 0.84);
+      }
+      .tune-field label {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--gold2);
+      }
+      .tune-field input {
+        width: 100%;
+      }
+      .tune-value {
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+      .tune-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 14px;
+      }
+      .tune-output {
+        margin: 14px 0 0;
+        padding: 14px;
+        border-radius: 18px;
+        border: 1px solid rgba(185, 151, 69, 0.28);
+        background: rgba(75, 55, 31, 0.05);
+        color: var(--ink);
+        font: 12px/1.7 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        white-space: pre-wrap;
+        word-break: break-word;
       }
       .button-row {
         display: flex;
@@ -362,11 +503,17 @@
           width: min(100% - 8px, 760px);
           padding-top: 10px;
         }
+        .tune-grid {
+          grid-template-columns: 1fr;
+        }
+        .tune-presets {
+          grid-template-columns: 1fr;
+        }
         :root {
-          --card-back-image-width: 124%;
-          --card-back-image-height: 142%;
-          --card-back-image-offset-y: 1.2%;
-          --card-back-image-scale-y: 1.085;
+          --card-back-image-width: var(--mobile-card-back-image-width);
+          --card-back-image-height: var(--mobile-card-back-image-height);
+          --card-back-image-offset-y: var(--mobile-card-back-image-offset-y);
+          --card-back-image-scale-y: var(--mobile-card-back-image-scale-y);
         }
         .hero {
           padding: 24px 16px 20px;
@@ -406,6 +553,46 @@
       <section id="readingPanel" class="panel hidden">
         <h2 class="spread-title">リーディング結果</h2>
         <div class="reading" id="reading"></div>
+      </section>
+      <section id="tunePanel" class="panel tune-panel hidden">
+        <details open>
+          <summary>ローカル微調整パネル</summary>
+          <div class="tune-inner">
+            <p class="tune-intro">
+              ローカル表示だけでカード位置を詰められます。値はこのブラウザに保存され、下の CSS をそのまま
+              使えます。
+            </p>
+            <div class="tune-presets">
+              <section class="tune-preset-card">
+                <p class="tune-preset-title">今の値をプリセット保存</p>
+                <div class="tune-preset-row">
+                  <input id="tunePresetName" type="text" placeholder="例: スマホ裏面少し弱め" />
+                </div>
+                <div class="tune-preset-actions">
+                  <button id="saveTunePresetButton" type="button">プリセット保存</button>
+                </div>
+              </section>
+              <section class="tune-preset-card">
+                <p class="tune-preset-title">保存済みプリセット</p>
+                <div class="tune-preset-row">
+                  <select id="tunePresetSelect">
+                    <option value="">プリセットを選択</option>
+                  </select>
+                </div>
+                <div class="tune-preset-actions">
+                  <button id="applyTunePresetButton" type="button">適用</button>
+                  <button id="deleteTunePresetButton" class="secondary" type="button">削除</button>
+                </div>
+              </section>
+            </div>
+            <div id="tuneGroups" class="tune-groups"></div>
+            <div class="tune-actions">
+              <button id="copyTuneButton" type="button">CSS をコピー</button>
+              <button id="resetTuneButton" class="secondary" type="button">微調整をリセット</button>
+            </div>
+            <pre id="tuneOutput" class="tune-output"></pre>
+          </div>
+        </details>
       </section>
       <div class="button-row">
         <button id="resetButton" class="secondary" type="button">もう一度ひく</button>
@@ -794,13 +981,166 @@
       const positions = ["今の心", "必要な気づき", "次の一歩"];
       let currentDraw = [],
         revealed = new Set();
+      const tuneStorageKey = "flower-leading-tune-values";
+      const tunePresetStorageKey = "flower-leading-tune-presets";
+      const tuneDefinitions = [
+        {
+          key: "--card-front-image-width",
+          label: "表面 横幅",
+          min: 80,
+          max: 140,
+          step: 0.1,
+          unit: "%",
+          section: "desktop",
+          group: "front",
+        },
+        {
+          key: "--card-front-image-height",
+          label: "表面 高さ",
+          min: 80,
+          max: 140,
+          step: 0.1,
+          unit: "%",
+          section: "desktop",
+          group: "front",
+        },
+        {
+          key: "--card-front-image-offset-y",
+          label: "表面 Y位置",
+          min: -20,
+          max: 20,
+          step: 0.1,
+          unit: "%",
+          section: "desktop",
+          group: "front",
+        },
+        {
+          key: "--card-back-image-width",
+          label: "裏面 横幅",
+          min: 80,
+          max: 150,
+          step: 0.1,
+          unit: "%",
+          section: "desktop",
+          group: "back",
+        },
+        {
+          key: "--card-back-image-height",
+          label: "裏面 高さ",
+          min: 80,
+          max: 170,
+          step: 0.1,
+          unit: "%",
+          section: "desktop",
+          group: "back",
+        },
+        {
+          key: "--card-back-image-aspect-ratio",
+          label: "裏面 比率",
+          min: 0.8,
+          max: 1.4,
+          step: 0.001,
+          unit: "",
+          section: "desktop",
+          group: "back",
+        },
+        {
+          key: "--card-back-image-offset-x",
+          label: "裏面 X位置",
+          min: -20,
+          max: 20,
+          step: 0.1,
+          unit: "%",
+          section: "desktop",
+          group: "back",
+        },
+        {
+          key: "--card-back-image-offset-y",
+          label: "裏面 Y位置",
+          min: -20,
+          max: 20,
+          step: 0.1,
+          unit: "%",
+          section: "desktop",
+          group: "back",
+        },
+        {
+          key: "--card-back-image-scale-y",
+          label: "裏面 縦伸び",
+          min: 0.9,
+          max: 1.2,
+          step: 0.001,
+          unit: "",
+          section: "desktop",
+          group: "back",
+        },
+        {
+          key: "--mobile-card-back-image-width",
+          label: "スマホ裏面 横幅",
+          min: 80,
+          max: 170,
+          step: 0.1,
+          unit: "%",
+          section: "mobile",
+          group: "mobile",
+        },
+        {
+          key: "--mobile-card-back-image-height",
+          label: "スマホ裏面 高さ",
+          min: 80,
+          max: 180,
+          step: 0.1,
+          unit: "%",
+          section: "mobile",
+          group: "mobile",
+        },
+        {
+          key: "--mobile-card-back-image-offset-y",
+          label: "スマホ裏面 Y位置",
+          min: -20,
+          max: 20,
+          step: 0.1,
+          unit: "%",
+          section: "mobile",
+          group: "mobile",
+        },
+        {
+          key: "--mobile-card-back-image-scale-y",
+          label: "スマホ裏面 縦伸び",
+          min: 0.9,
+          max: 1.25,
+          step: 0.001,
+          unit: "",
+          section: "mobile",
+          group: "mobile",
+        },
+      ];
+      const tuneGroupDefinitions = [
+        { key: "front", label: "表面調整", open: true },
+        { key: "back", label: "裏面調整", open: true },
+        { key: "mobile", label: "スマホ裏面調整", open: false },
+      ];
+      const rootStyle = document.documentElement.style;
+      const defaultTuneValues = Object.fromEntries(
+        tuneDefinitions.map(({ key }) => [key, getComputedStyle(document.documentElement).getPropertyValue(key).trim()]),
+      );
       const spreadPanel = document.getElementById("spreadPanel"),
         readingPanel = document.getElementById("readingPanel"),
         spread = document.getElementById("spread"),
         reading = document.getElementById("reading"),
         readingActionRow = document.getElementById("readingActionRow"),
         openReadingButton = document.getElementById("openReadingButton"),
-        resetButton = document.getElementById("resetButton");
+        resetButton = document.getElementById("resetButton"),
+        tunePanel = document.getElementById("tunePanel"),
+        tuneGroups = document.getElementById("tuneGroups"),
+        tuneOutput = document.getElementById("tuneOutput"),
+        copyTuneButton = document.getElementById("copyTuneButton"),
+        resetTuneButton = document.getElementById("resetTuneButton"),
+        tunePresetName = document.getElementById("tunePresetName"),
+        tunePresetSelect = document.getElementById("tunePresetSelect"),
+        saveTunePresetButton = document.getElementById("saveTunePresetButton"),
+        applyTunePresetButton = document.getElementById("applyTunePresetButton"),
+        deleteTunePresetButton = document.getElementById("deleteTunePresetButton");
       function shuffle(a) {
         const b = [...a];
         for (let i = b.length - 1; i > 0; i--) {
@@ -868,8 +1208,165 @@
           (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[c],
         );
       }
+      function loadTuneValues() {
+        try {
+          return JSON.parse(localStorage.getItem(tuneStorageKey) || "{}");
+        } catch {
+          return {};
+        }
+      }
+      function loadTunePresets() {
+        try {
+          return JSON.parse(localStorage.getItem(tunePresetStorageKey) || "{}");
+        } catch {
+          return {};
+        }
+      }
+      function saveTuneValues(values) {
+        localStorage.setItem(tuneStorageKey, JSON.stringify(values));
+      }
+      function saveTunePresets(presets) {
+        localStorage.setItem(tunePresetStorageKey, JSON.stringify(presets));
+      }
+      function formatTuneValue(definition, value) {
+        return `${value}${definition.unit}`;
+      }
+      function parseTuneNumber(value) {
+        const n = Number.parseFloat(value);
+        return Number.isFinite(n) ? n : 0;
+      }
+      function currentTuneValues() {
+        return Object.fromEntries(
+          tuneDefinitions.map((definition) => {
+            const raw = getComputedStyle(document.documentElement).getPropertyValue(definition.key).trim();
+            return [definition.key, raw || defaultTuneValues[definition.key]];
+          }),
+        );
+      }
+      function renderTuneOutput() {
+        const values = currentTuneValues();
+        const rootLines = tuneDefinitions
+          .map(({ key }) => `  ${key}: ${values[key]};`)
+          .join("\n");
+        tuneOutput.textContent = `:root {\n${rootLines}\n}\n\n@media (max-width: 820px) {\n  :root {\n    --card-back-image-width: var(--mobile-card-back-image-width);\n    --card-back-image-height: var(--mobile-card-back-image-height);\n    --card-back-image-offset-y: var(--mobile-card-back-image-offset-y);\n    --card-back-image-scale-y: var(--mobile-card-back-image-scale-y);\n  }\n}`;
+      }
+      function applyTuneValues(values) {
+        tuneDefinitions.forEach((definition) => {
+          const value = values[definition.key] || defaultTuneValues[definition.key];
+          rootStyle.setProperty(definition.key, value);
+        });
+      }
+      function syncTuneInputs() {
+        const values = currentTuneValues();
+        tuneDefinitions.forEach((definition) => {
+          const input = tuneGroups.querySelector(`[data-tune-key="${definition.key}"]`);
+          const valueNode = tuneGroups.querySelector(`[data-tune-value="${definition.key}"]`);
+          if (!input || !valueNode) return;
+          input.value = String(parseTuneNumber(values[definition.key]));
+          valueNode.textContent = values[definition.key];
+        });
+        renderTuneOutput();
+      }
+      function handleTuneInput(definition, value) {
+        rootStyle.setProperty(definition.key, formatTuneValue(definition, value));
+        saveTuneValues(currentTuneValues());
+        syncTuneInputs();
+      }
+      function createTuneField(definition) {
+        const field = document.createElement("div");
+        field.className = "tune-field";
+        field.innerHTML = `<label for="tune-${definition.key.slice(2)}"><span>${escapeHtml(definition.label)}</span><span class="tune-value" data-tune-value="${definition.key}"></span></label><input id="tune-${definition.key.slice(2)}" data-tune-key="${definition.key}" type="range" min="${definition.min}" max="${definition.max}" step="${definition.step}">`;
+        field
+          .querySelector("input")
+          .addEventListener("input", (event) => handleTuneInput(definition, event.target.value));
+        return field;
+      }
+      function createTuneGroup(groupDefinition) {
+        const group = document.createElement("details");
+        group.className = "tune-group";
+        if (groupDefinition.open) group.open = true;
+        group.innerHTML = `<summary>${escapeHtml(groupDefinition.label)}</summary><div class="tune-group-body"><div class="tune-grid"></div></div>`;
+        const grid = group.querySelector(".tune-grid");
+        tuneDefinitions
+          .filter(({ group }) => group === groupDefinition.key)
+          .forEach((definition) => {
+            grid.append(createTuneField(definition));
+          });
+        return group;
+      }
+      function renderTuneGroups() {
+        tuneGroups.innerHTML = "";
+        tuneGroupDefinitions.forEach((groupDefinition) => {
+          tuneGroups.append(createTuneGroup(groupDefinition));
+        });
+      }
+      function renderTunePresetOptions(selectedName = "") {
+        const presets = loadTunePresets();
+        const names = Object.keys(presets).sort((a, b) => a.localeCompare(b, "ja"));
+        tunePresetSelect.innerHTML = `<option value="">プリセットを選択</option>${names
+          .map((name) => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`)
+          .join("")}`;
+        tunePresetSelect.value = names.includes(selectedName) ? selectedName : "";
+      }
+      function saveCurrentPreset() {
+        const name = tunePresetName.value.trim();
+        if (!name) return;
+        const presets = loadTunePresets();
+        presets[name] = currentTuneValues();
+        saveTunePresets(presets);
+        renderTunePresetOptions(name);
+        tunePresetName.value = name;
+      }
+      function applySelectedPreset() {
+        const name = tunePresetSelect.value;
+        if (!name) return;
+        const presets = loadTunePresets();
+        const values = presets[name];
+        if (!values) return;
+        applyTuneValues(values);
+        saveTuneValues(currentTuneValues());
+        syncTuneInputs();
+        tunePresetName.value = name;
+      }
+      function deleteSelectedPreset() {
+        const name = tunePresetSelect.value;
+        if (!name) return;
+        const presets = loadTunePresets();
+        delete presets[name];
+        saveTunePresets(presets);
+        renderTunePresetOptions();
+        if (tunePresetName.value.trim() === name) tunePresetName.value = "";
+      }
+      function initTunePanel() {
+        const localMode = location.protocol === "file:" || location.hostname === "localhost";
+        if (!localMode) return;
+        renderTuneGroups();
+        applyTuneValues(loadTuneValues());
+        syncTuneInputs();
+        renderTunePresetOptions();
+        tunePanel.classList.remove("hidden");
+        copyTuneButton.addEventListener("click", async () => {
+          await navigator.clipboard.writeText(tuneOutput.textContent);
+          copyTuneButton.textContent = "コピー済み";
+          window.setTimeout(() => {
+            copyTuneButton.textContent = "CSS をコピー";
+          }, 1200);
+        });
+        resetTuneButton.addEventListener("click", () => {
+          localStorage.removeItem(tuneStorageKey);
+          applyTuneValues(defaultTuneValues);
+          syncTuneInputs();
+        });
+        saveTunePresetButton.addEventListener("click", saveCurrentPreset);
+        applyTunePresetButton.addEventListener("click", applySelectedPreset);
+        deleteTunePresetButton.addEventListener("click", deleteSelectedPreset);
+        tunePresetSelect.addEventListener("change", () => {
+          if (tunePresetSelect.value) tunePresetName.value = tunePresetSelect.value;
+        });
+      }
       openReadingButton.addEventListener("click", openReading);
       resetButton.addEventListener("click", resetReading);
+      initTunePanel();
       drawCards();
     </script>
   </body>
