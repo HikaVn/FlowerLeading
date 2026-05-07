@@ -535,17 +535,6 @@
         .tune-presets {
           grid-template-columns: 1fr;
         }
-        :root {
-          --card-front-image-width: var(--mobile-card-front-image-width);
-          --card-front-image-height: var(--mobile-card-front-image-height);
-          --card-front-image-offset-y: var(--mobile-card-front-image-offset-y);
-          --card-back-image-width: var(--mobile-card-back-image-width);
-          --card-back-image-height: var(--mobile-card-back-image-height);
-          --card-back-image-aspect-ratio: var(--mobile-card-back-image-aspect-ratio);
-          --card-back-image-offset-x: var(--mobile-card-back-image-offset-x);
-          --card-back-image-offset-y: var(--mobile-card-back-image-offset-y);
-          --card-back-image-scale-y: var(--mobile-card-back-image-scale-y);
-        }
         .hero {
           padding: 24px 16px 20px;
           border-radius: 26px;
@@ -1230,6 +1219,18 @@
           open: false,
         },
       ];
+      const effectiveTuneVariableMap = [
+        ["--card-front-image-width", "--desktop-card-front-image-width", "--mobile-card-front-image-width"],
+        ["--card-front-image-height", "--desktop-card-front-image-height", "--mobile-card-front-image-height"],
+        ["--card-front-image-offset-y", "--desktop-card-front-image-offset-y", "--mobile-card-front-image-offset-y"],
+        ["--card-back-image-width", "--desktop-card-back-image-width", "--mobile-card-back-image-width"],
+        ["--card-back-image-height", "--desktop-card-back-image-height", "--mobile-card-back-image-height"],
+        ["--card-back-image-aspect-ratio", "--desktop-card-back-image-aspect-ratio", "--mobile-card-back-image-aspect-ratio"],
+        ["--card-back-image-offset-x", "--desktop-card-back-image-offset-x", "--mobile-card-back-image-offset-x"],
+        ["--card-back-image-offset-y", "--desktop-card-back-image-offset-y", "--mobile-card-back-image-offset-y"],
+        ["--card-back-image-scale-y", "--desktop-card-back-image-scale-y", "--mobile-card-back-image-scale-y"],
+      ];
+      const mobileTuneMediaQuery = window.matchMedia("(max-width: 820px)");
       const rootStyle = document.documentElement.style;
       const defaultTuneValues = Object.fromEntries(
         tuneDefinitions.map(({ key }) => [key, getComputedStyle(document.documentElement).getPropertyValue(key).trim()]),
@@ -1358,13 +1359,22 @@
         const rootLines = tuneDefinitions
           .map(({ key }) => `  ${key}: ${values[key]};`)
           .join("\n");
-        tuneOutput.textContent = `:root {\n${rootLines}\n}\n\n@media (max-width: 820px) {\n  :root {\n    --card-front-image-width: var(--mobile-card-front-image-width);\n    --card-front-image-height: var(--mobile-card-front-image-height);\n    --card-front-image-offset-y: var(--mobile-card-front-image-offset-y);\n    --card-back-image-width: var(--mobile-card-back-image-width);\n    --card-back-image-height: var(--mobile-card-back-image-height);\n    --card-back-image-aspect-ratio: var(--mobile-card-back-image-aspect-ratio);\n    --card-back-image-offset-x: var(--mobile-card-back-image-offset-x);\n    --card-back-image-offset-y: var(--mobile-card-back-image-offset-y);\n    --card-back-image-scale-y: var(--mobile-card-back-image-scale-y);\n  }\n}`;
+        tuneOutput.textContent = `:root {\n${rootLines}\n}`;
+      }
+      function applyEffectiveTuneValues() {
+        const isMobile = mobileTuneMediaQuery.matches;
+        effectiveTuneVariableMap.forEach(([effectiveKey, desktopKey, mobileKey]) => {
+          const sourceKey = isMobile ? mobileKey : desktopKey;
+          const value = getComputedStyle(document.documentElement).getPropertyValue(sourceKey).trim();
+          rootStyle.setProperty(effectiveKey, value);
+        });
       }
       function applyTuneValues(values) {
         tuneDefinitions.forEach((definition) => {
           const value = values[definition.key] || defaultTuneValues[definition.key];
           rootStyle.setProperty(definition.key, value);
         });
+        applyEffectiveTuneValues();
       }
       function syncTuneInputs() {
         const values = currentTuneValues();
@@ -1379,6 +1389,7 @@
       }
       function handleTuneInput(definition, value) {
         rootStyle.setProperty(definition.key, formatTuneValue(definition, value));
+        applyEffectiveTuneValues();
         saveTuneValues(currentTuneValues());
         syncTuneInputs();
       }
@@ -1457,6 +1468,7 @@
         syncTuneInputs();
         renderTunePresetOptions();
         tunePanel.classList.remove("hidden");
+        mobileTuneMediaQuery.addEventListener("change", applyEffectiveTuneValues);
         copyTuneButton.addEventListener("click", async () => {
           await navigator.clipboard.writeText(tuneOutput.textContent);
           copyTuneButton.textContent = "コピー済み";
