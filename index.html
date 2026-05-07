@@ -1338,8 +1338,10 @@
         if (tunePresetName.value.trim() === name) tunePresetName.value = "";
       }
       function initTunePanel() {
+        const searchParams = new URLSearchParams(location.search);
+        const tuneMode = searchParams.get("tune") === "1";
         const localMode = location.protocol === "file:" || location.hostname === "localhost";
-        if (!localMode) return;
+        if (!localMode && !tuneMode) return;
         renderTuneGroups();
         applyTuneValues(loadTuneValues());
         syncTuneInputs();
