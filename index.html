@@ -23,8 +23,13 @@
         --card-back-image-offset-x: -0.2%;
         --card-back-image-offset-y: 2.20%;
         --card-back-image-scale-y: 1.029;
+        --mobile-card-front-image-width: 120%;
+        --mobile-card-front-image-height: 120%;
+        --mobile-card-front-image-offset-y: -4.4%;
         --mobile-card-back-image-width: 124%;
         --mobile-card-back-image-height: 142%;
+        --mobile-card-back-image-aspect-ratio: 1.1;
+        --mobile-card-back-image-offset-x: -0.2%;
         --mobile-card-back-image-offset-y: 1.2%;
         --mobile-card-back-image-scale-y: 1.085;
         --serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
@@ -213,6 +218,12 @@
       .tune-group-body {
         padding: 0 12px 12px;
       }
+      .tune-group-note {
+        margin: 0 0 10px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+      }
       .tune-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -239,6 +250,12 @@
       .tune-value {
         color: var(--muted);
         font-variant-numeric: tabular-nums;
+      }
+      .tune-help {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.6;
       }
       .tune-actions {
         display: flex;
@@ -510,8 +527,13 @@
           grid-template-columns: 1fr;
         }
         :root {
+          --card-front-image-width: var(--mobile-card-front-image-width);
+          --card-front-image-height: var(--mobile-card-front-image-height);
+          --card-front-image-offset-y: var(--mobile-card-front-image-offset-y);
           --card-back-image-width: var(--mobile-card-back-image-width);
           --card-back-image-height: var(--mobile-card-back-image-height);
+          --card-back-image-aspect-ratio: var(--mobile-card-back-image-aspect-ratio);
+          --card-back-image-offset-x: var(--mobile-card-back-image-offset-x);
           --card-back-image-offset-y: var(--mobile-card-back-image-offset-y);
           --card-back-image-scale-y: var(--mobile-card-back-image-scale-y);
         }
@@ -539,11 +561,11 @@
         <h1>Flower Leading</h1>
         <p class="subtitle">花が導く、3枚のメッセージ</p>
         <p class="intro">
-          心に浮かぶテーマをそっと置いて、3枚の花を開いてください。<br />「今の心」「必要な気づき」「次の一歩」の順に、花からのメッセージを受け取ります。
+          心に浮かぶテーマをそっと置いて、3枚のカードを開いてください。<br />
         </p>
       </section>
       <section id="spreadPanel" class="panel hidden">
-        <h2 class="spread-title">3枚の花を、左から順に開いてください</h2>
+        <h2 class="spread-title">3枚のカードを順に開いてください</h2>
         <div class="spread" id="spread"></div>
         <p class="hint">カードをクリックすると表になります。</p>
         <div class="button-row hidden" id="readingActionRow">
@@ -986,7 +1008,8 @@
       const tuneDefinitions = [
         {
           key: "--card-front-image-width",
-          label: "表面 横幅",
+          label: "表面 横の大きさ",
+          help: "花画像の左右の広がりです。大きいほど横いっぱいに近づきます。",
           min: 80,
           max: 140,
           step: 0.1,
@@ -996,7 +1019,8 @@
         },
         {
           key: "--card-front-image-height",
-          label: "表面 高さ",
+          label: "表面 縦の大きさ",
+          help: "花画像の上下の広がりです。大きいほど上下の余白が減ります。",
           min: 80,
           max: 140,
           step: 0.1,
@@ -1006,7 +1030,8 @@
         },
         {
           key: "--card-front-image-offset-y",
-          label: "表面 Y位置",
+          label: "表面 上下位置",
+          help: "マイナスで上へ、プラスで下へ動きます。",
           min: -20,
           max: 20,
           step: 0.1,
@@ -1016,7 +1041,8 @@
         },
         {
           key: "--card-back-image-width",
-          label: "裏面 横幅",
+          label: "裏面 横の大きさ",
+          help: "Top.png の左右の広がりです。",
           min: 80,
           max: 150,
           step: 0.1,
@@ -1026,7 +1052,8 @@
         },
         {
           key: "--card-back-image-height",
-          label: "裏面 高さ",
+          label: "裏面 縦の大きさ",
+          help: "Top.png の上下の広がりです。",
           min: 80,
           max: 170,
           step: 0.1,
@@ -1036,7 +1063,8 @@
         },
         {
           key: "--card-back-image-aspect-ratio",
-          label: "裏面 比率",
+          label: "裏面 横縦比",
+          help: "画像の横長・縦長の見え方を調整します。",
           min: 0.8,
           max: 1.4,
           step: 0.001,
@@ -1046,7 +1074,8 @@
         },
         {
           key: "--card-back-image-offset-x",
-          label: "裏面 X位置",
+          label: "裏面 左右位置",
+          help: "マイナスで左へ、プラスで右へ動きます。",
           min: -20,
           max: 20,
           step: 0.1,
@@ -1056,7 +1085,8 @@
         },
         {
           key: "--card-back-image-offset-y",
-          label: "裏面 Y位置",
+          label: "裏面 上下位置",
+          help: "マイナスで上へ、プラスで下へ動きます。",
           min: -20,
           max: 20,
           step: 0.1,
@@ -1066,7 +1096,8 @@
         },
         {
           key: "--card-back-image-scale-y",
-          label: "裏面 縦伸び",
+          label: "裏面 縦方向の伸び",
+          help: "比率とは別に、縦だけ少し引き伸ばします。",
           min: 0.9,
           max: 1.2,
           step: 0.001,
@@ -1075,50 +1106,120 @@
           group: "back",
         },
         {
-          key: "--mobile-card-back-image-width",
-          label: "スマホ裏面 横幅",
+          key: "--mobile-card-front-image-width",
+          label: "スマホ表面 横の大きさ",
+          help: "スマホ表示だけで花画像の左右の広がりを変えます。PC には影響しません。",
           min: 80,
-          max: 170,
+          max: 140,
           step: 0.1,
           unit: "%",
           section: "mobile",
-          group: "mobile",
+          group: "mobileFront",
         },
         {
-          key: "--mobile-card-back-image-height",
-          label: "スマホ裏面 高さ",
+          key: "--mobile-card-front-image-height",
+          label: "スマホ表面 縦の大きさ",
+          help: "スマホ表示だけで花画像の上下の広がりを変えます。PC には影響しません。",
           min: 80,
-          max: 180,
+          max: 140,
           step: 0.1,
           unit: "%",
           section: "mobile",
-          group: "mobile",
+          group: "mobileFront",
         },
         {
-          key: "--mobile-card-back-image-offset-y",
-          label: "スマホ裏面 Y位置",
+          key: "--mobile-card-front-image-offset-y",
+          label: "スマホ表面 上下位置",
+          help: "スマホ表示だけで花画像を上げ下げします。PC には影響しません。",
           min: -20,
           max: 20,
           step: 0.1,
           unit: "%",
           section: "mobile",
-          group: "mobile",
+          group: "mobileFront",
+        },
+        {
+          key: "--mobile-card-back-image-width",
+          label: "スマホ裏面 横の大きさ",
+          help: "スマホ表示だけで Top.png の左右の広がりを変えます。PC には影響しません。",
+          min: 80,
+          max: 170,
+          step: 0.1,
+          unit: "%",
+          section: "mobile",
+          group: "mobileBack",
+        },
+        {
+          key: "--mobile-card-back-image-height",
+          label: "スマホ裏面 縦の大きさ",
+          help: "スマホ表示だけで Top.png の上下の広がりを変えます。PC には影響しません。",
+          min: 80,
+          max: 180,
+          step: 0.1,
+          unit: "%",
+          section: "mobile",
+          group: "mobileBack",
+        },
+        {
+          key: "--mobile-card-back-image-aspect-ratio",
+          label: "スマホ裏面 横縦比",
+          help: "スマホ表示だけで横長・縦長の見え方を変えます。PC には影響しません。",
+          min: 0.8,
+          max: 1.4,
+          step: 0.001,
+          unit: "",
+          section: "mobile",
+          group: "mobileBack",
+        },
+        {
+          key: "--mobile-card-back-image-offset-x",
+          label: "スマホ裏面 左右位置",
+          help: "スマホ表示だけで左へ右へ動かします。PC には影響しません。",
+          min: -20,
+          max: 20,
+          step: 0.1,
+          unit: "%",
+          section: "mobile",
+          group: "mobileBack",
+        },
+        {
+          key: "--mobile-card-back-image-offset-y",
+          label: "スマホ裏面 上下位置",
+          help: "スマホ表示だけで上げ下げします。PC には影響しません。",
+          min: -20,
+          max: 20,
+          step: 0.1,
+          unit: "%",
+          section: "mobile",
+          group: "mobileBack",
         },
         {
           key: "--mobile-card-back-image-scale-y",
-          label: "スマホ裏面 縦伸び",
+          label: "スマホ裏面 縦方向の伸び",
+          help: "スマホ表示だけで縦に少し引き伸ばします。PC には影響しません。",
           min: 0.9,
           max: 1.25,
           step: 0.001,
           unit: "",
           section: "mobile",
-          group: "mobile",
+          group: "mobileBack",
         },
       ];
       const tuneGroupDefinitions = [
-        { key: "front", label: "表面調整", open: true },
-        { key: "back", label: "裏面調整", open: true },
-        { key: "mobile", label: "スマホ裏面調整", open: false },
+        { key: "front", label: "表面調整", note: "PC とタブレット側の花画像に効きます。", open: true },
+        { key: "back", label: "裏面調整", note: "PC とタブレット側の Top.png に効きます。", open: true },
+        {
+          key: "mobileFront",
+          label: "スマホ表面調整",
+          note: "スマホ表示だけの花画像設定です。PC 側とは独立しています。",
+          open: false,
+        },
+        {
+          key: "mobileBack",
+          label: "スマホ裏面調整",
+          note: "スマホ表示だけの Top.png 設定です。PC 側とは独立しています。",
+          open: false,
+        },
       ];
       const rootStyle = document.documentElement.style;
       const defaultTuneValues = Object.fromEntries(
@@ -1248,7 +1349,7 @@
         const rootLines = tuneDefinitions
           .map(({ key }) => `  ${key}: ${values[key]};`)
           .join("\n");
-        tuneOutput.textContent = `:root {\n${rootLines}\n}\n\n@media (max-width: 820px) {\n  :root {\n    --card-back-image-width: var(--mobile-card-back-image-width);\n    --card-back-image-height: var(--mobile-card-back-image-height);\n    --card-back-image-offset-y: var(--mobile-card-back-image-offset-y);\n    --card-back-image-scale-y: var(--mobile-card-back-image-scale-y);\n  }\n}`;
+        tuneOutput.textContent = `:root {\n${rootLines}\n}\n\n@media (max-width: 820px) {\n  :root {\n    --card-front-image-width: var(--mobile-card-front-image-width);\n    --card-front-image-height: var(--mobile-card-front-image-height);\n    --card-front-image-offset-y: var(--mobile-card-front-image-offset-y);\n    --card-back-image-width: var(--mobile-card-back-image-width);\n    --card-back-image-height: var(--mobile-card-back-image-height);\n    --card-back-image-aspect-ratio: var(--mobile-card-back-image-aspect-ratio);\n    --card-back-image-offset-x: var(--mobile-card-back-image-offset-x);\n    --card-back-image-offset-y: var(--mobile-card-back-image-offset-y);\n    --card-back-image-scale-y: var(--mobile-card-back-image-scale-y);\n  }\n}`;
       }
       function applyTuneValues(values) {
         tuneDefinitions.forEach((definition) => {
@@ -1275,7 +1376,7 @@
       function createTuneField(definition) {
         const field = document.createElement("div");
         field.className = "tune-field";
-        field.innerHTML = `<label for="tune-${definition.key.slice(2)}"><span>${escapeHtml(definition.label)}</span><span class="tune-value" data-tune-value="${definition.key}"></span></label><input id="tune-${definition.key.slice(2)}" data-tune-key="${definition.key}" type="range" min="${definition.min}" max="${definition.max}" step="${definition.step}">`;
+        field.innerHTML = `<label for="tune-${definition.key.slice(2)}"><span>${escapeHtml(definition.label)}</span><span class="tune-value" data-tune-value="${definition.key}"></span></label><input id="tune-${definition.key.slice(2)}" data-tune-key="${definition.key}" type="range" min="${definition.min}" max="${definition.max}" step="${definition.step}"><p class="tune-help">${escapeHtml(definition.help || "")}</p>`;
         field
           .querySelector("input")
           .addEventListener("input", (event) => handleTuneInput(definition, event.target.value));
@@ -1285,7 +1386,7 @@
         const group = document.createElement("details");
         group.className = "tune-group";
         if (groupDefinition.open) group.open = true;
-        group.innerHTML = `<summary>${escapeHtml(groupDefinition.label)}</summary><div class="tune-group-body"><div class="tune-grid"></div></div>`;
+        group.innerHTML = `<summary>${escapeHtml(groupDefinition.label)}</summary><div class="tune-group-body"><p class="tune-group-note">${escapeHtml(groupDefinition.note || "")}</p><div class="tune-grid"></div></div>`;
         const grid = group.querySelector(".tune-grid");
         tuneDefinitions
           .filter(({ group }) => group === groupDefinition.key)
