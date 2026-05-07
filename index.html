@@ -1504,6 +1504,10 @@
           tuneGroups.append(createTuneGroup(groupDefinition));
         });
       }
+      function initEffectiveTuneValues() {
+        applyTuneValues(loadTuneValues());
+        mobileTuneMediaQuery.addEventListener("change", applyEffectiveTuneValues);
+      }
       function renderTunePresetOptions(selectedName = "") {
         const presets = loadTunePresets();
         const names = Object.keys(presets).sort((a, b) => a.localeCompare(b, "ja"));
@@ -1547,11 +1551,9 @@
         const localMode = location.protocol === "file:" || location.hostname === "localhost";
         if (!localMode && !tuneMode) return;
         renderTuneGroups();
-        applyTuneValues(loadTuneValues());
         syncTuneInputs();
         renderTunePresetOptions();
         tunePanel.classList.remove("hidden");
-        mobileTuneMediaQuery.addEventListener("change", applyEffectiveTuneValues);
         copyTuneButton.addEventListener("click", async () => {
           await navigator.clipboard.writeText(tuneOutput.textContent);
           copyTuneButton.textContent = "コピー済み";
@@ -1573,6 +1575,7 @@
       }
       openReadingButton.addEventListener("click", openReading);
       resetButton.addEventListener("click", resetReading);
+      initEffectiveTuneValues();
       initTunePanel();
       drawCards();
     </script>
